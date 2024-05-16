@@ -29,6 +29,6 @@ request(url, function (error, response, body) {
             console.error('Error writing file:', err);
             process.exit(1);
         }
-        console.log('File saved successfully:', filePath);
+        // No need to print file saved message here
     });
 });

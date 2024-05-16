@@ -1,37 +1,20 @@
 #!/usr/bin/node
+
 const request = require('request');
+const url = process.argv[2];
 
-// Check if the URL argument is provided
-if (process.argv.length !== 3) {
-  console.error('Usage: node compute_completed_tasks.js <API_URL>');
-  process.exit(1);
-}
-
-const apiUrl = process.argv[2];
-
-request(apiUrl, function (error, response, body) {
+request(url, { json: true }, (error, body) => {
   if (error) {
-    console.error('Error:', error);
-    process.exit(1);
-  }
-  if (response.statusCode !== 200) {
-    console.error('Request failed with status code:', response.statusCode);
-    process.exit(1);
+    console.error(error);
+    return;
   }
 
-  const todos = JSON.parse(body);
-  const completedTasks = {};
+  const completed = {};
 
-  todos.forEach(todo => {
-    if (todo.completed) {
-      if (!completedTasks[todo.userId]) {
-        completedTasks[todo.userId] = 0;
-      }
-      completedTasks[todo.userId]++;
+  body.forEach(task => {
+    if (task.completed) {
+      completed[task.userId] = (completed[task.userId] || 0) + 1;
     }
   });
-
-  for (const userId in completedTasks) {
-    console.log(`User ${userId} has completed ${completedTasks[userId]} tasks`);
-  }
+  console.log(completed);
 });

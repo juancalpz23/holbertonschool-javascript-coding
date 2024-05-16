@@ -5,7 +5,7 @@ const fs = require('fs');
 
 // Check if both arguments are provided
 if (process.argv.length !== 4) {
-  console.error("Usage: node script.js <URL> <output_file>");
+  console.error('Usage: node script.js <URL> <output_file>');
   process.exit(1);
 }
 

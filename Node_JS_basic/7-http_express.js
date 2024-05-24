@@ -8,7 +8,7 @@ const DATABASE = args[0];
 const app = express();
 const port = 1245;
 
-app.get('/', (req,res) => {
+app.get('/', (req, res) => {
   res.send('Hello Holberton School!');
 });
 
@@ -18,7 +18,7 @@ app.get('/students', async (req, res) => {
     const students = await countStudents(DATABASE);
     res.send(`${msg}${students.join('\n')}`);
   } catch (error) {
-    res.send('${msg}${error.message}');
+    res.send(`${msg}${error.message}`);
   }
 });
 
